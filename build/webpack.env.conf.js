@@ -1,4 +1,9 @@
 const NODE_ENV = process.env.NODE_ENV
-console.log(NODE_ENV)
-const envConfig = `../config/${NODE_ENV}.env.js`
+let configPath
+if (NODE_ENV) {
+  configPath = `../config/${NODE_ENV}.env.js`
+} else {
+  configPath = `../config/prod.env.js`
+}
+const envConfig = configPath
 module.exports = require(envConfig)

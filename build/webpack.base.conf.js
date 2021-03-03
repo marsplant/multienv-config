@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const MyPlugin = require('../plugins/MyPlugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -20,12 +21,7 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
-  // plugins: [
-  //   // http://vuejs.github.io/vue-loader/en/workflow/production.html
-  //   new webpack.DefinePlugin({
-  //     'process.env': envConfig
-  //   })
-  // ],
+  plugins: [new MyPlugin({ params: 'test!' })],
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
@@ -85,6 +81,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.txt$/,
+        use: [resolve('loader/reverse-loader.js')]
       }
     ]
   },
